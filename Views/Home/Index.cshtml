@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Pemesanan Tiket Konser</h1>
+
+    @* TES KONEKSI SEMENTARA *@
+    @if (ViewBag.ErrorDb != null)
+    {
+        <p style="color: red;">Koneksi database GAGAL: @ViewBag.ErrorDb</p>
+    }
+    else
+    {
+        <p style="color: green;">Koneksi database berhasil. Jumlah kategori tiket: <strong>@ViewBag.JumlahKategori</strong></p>
+    }
+</div>
