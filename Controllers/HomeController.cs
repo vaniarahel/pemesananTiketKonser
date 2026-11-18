@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PemesananTiketKonser.Data;
+using PemesananTiketKonser.Filters;
 using PemesananTiketKonser.Models;
 
 namespace PemesananTiketKonser.Controllers;
@@ -16,6 +17,8 @@ public class HomeController : Controller
         _db = db;
     }
 
+    // Hanya bisa dibuka setelah login. (Halaman Error sengaja tidak dikunci.)
+    [WajibLogin]
     public async Task<IActionResult> Index()
     {
         // TES KONEKSI SEMENTARA: hitung jumlah kategori tiket lewat EF Core.

@@ -30,7 +30,9 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    @* Menu kiri: semua fitur aplikasi *@
+                    @* Menu kiri: semua fitur aplikasi, hanya muncul kalau sudah login *@
+                    @if (admin != null)
+                    {
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="@Kelas("Home")" asp-controller="Home" asp-action="Index">Menu Utama</a>
@@ -48,6 +50,7 @@
                             <a class="@Kelas("Laporan")" asp-controller="Laporan" asp-action="Index">Laporan Penjualan</a>
                         </li>
                     </ul>
+                    }
 
                     @* Menu kanan: nama admin + Logout, hanya muncul kalau sudah login *@
                     @if (admin != null)
