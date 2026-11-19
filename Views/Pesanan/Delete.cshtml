@@ -1,5 +1,6 @@
 ﻿@model PemesananTiketKonser.Models.Pesanan
 @using PemesananTiketKonser.Helpers
+@using PemesananTiketKonser.Data
 @{
     ViewData["Title"] = "Hapus Pesanan";
 }
@@ -26,7 +27,7 @@
     <dt class="col-sm-3">Pembayaran</dt>
     <dd class="col-sm-9">@Format.Rupiah(Model.Pembayaran)</dd>
     <dt class="col-sm-3">Status</dt>
-    <dd class="col-sm-9">@Model.Status</dd>
+    <dd class="col-sm-9">@PesananLogic.KeteranganBayar(Model.TotalHarga, Model.Pembayaran)</dd>
 </dl>
 
 <form asp-action="Delete" asp-route-id="@Model.Id" method="post">

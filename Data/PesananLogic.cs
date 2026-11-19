@@ -44,6 +44,23 @@ public static class PesananLogic
     public static string HitungStatus(int totalHarga, int pembayaran) =>
         pembayaran >= totalHarga ? Pesanan.StatusLunas : Pesanan.StatusBelumLunas;
 
+    // Kelebihan bayar yang harus dikembalikan ke pembeli (0 kalau tidak lebih).
+    public static int HitungKembalian(int totalHarga, int pembayaran) =>
+        Math.Max(0, pembayaran - totalHarga);
+
+    // Pesan status untuk ditampilkan: LUNAS, LUNAS (kembalian ...), atau BELUM LUNAS (kurang ...).
+    public static string KeteranganBayar(int totalHarga, int pembayaran)
+    {
+        if (pembayaran > totalHarga)
+        {
+            return $"LUNAS, kembalian {Helpers.Format.Rupiah(pembayaran - totalHarga)}";
+        }
+
+        return pembayaran == totalHarga
+            ? "LUNAS"
+            : $"BELUM LUNAS, kurang {Helpers.Format.Rupiah(totalHarga - pembayaran)}";
+    }
+
     // Cek pembeli, kategori, dan kuota, lalu isi TotalHarga dan Status.
     // Mengembalikan daftar error (nama field, pesan). Kosong = valid.
     public static async Task<List<(string Field, string Pesan)>> ValidasiDanHitungAsync(

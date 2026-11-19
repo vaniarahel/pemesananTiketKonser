@@ -78,7 +78,7 @@ public class PesananController : Controller
             }
         }
 
-        TempData["Sukses"] = $"Pesanan {model.IdPesanan} berhasil disimpan ({model.Status}).";
+        TempData["Sukses"] = $"Pesanan {model.IdPesanan} berhasil disimpan ({PesananLogic.KeteranganBayar(model.TotalHarga, model.Pembayaran)}).";
         return RedirectToAction(nameof(Index));
     }
 
@@ -131,7 +131,7 @@ public class PesananController : Controller
         lama.Status = model.Status;
         await _db.SaveChangesAsync();
 
-        TempData["Sukses"] = $"Pesanan {lama.IdPesanan} berhasil diubah ({lama.Status}).";
+        TempData["Sukses"] = $"Pesanan {lama.IdPesanan} berhasil diubah ({PesananLogic.KeteranganBayar(lama.TotalHarga, lama.Pembayaran)}).";
         return RedirectToAction(nameof(Index));
     }
 

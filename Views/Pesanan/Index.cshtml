@@ -41,7 +41,18 @@ else
                         <td>@p.Kategori?.NamaKategori</td>
                         <td class="text-end">@p.JumlahTiket</td>
                         <td class="text-end text-nowrap">@Format.Rupiah(p.TotalHarga)</td>
-                        <td class="text-end text-nowrap">@Format.Rupiah(p.Pembayaran)</td>
+                        <td class="text-end text-nowrap">
+                            @Format.Rupiah(p.Pembayaran)
+                            @* Keterangan kurang / kembalian di bawah nominal pembayaran *@
+                            @if (p.Pembayaran > p.TotalHarga)
+                            {
+                                <div class="small text-primary">kembalian @Format.Rupiah(p.Pembayaran - p.TotalHarga)</div>
+                            }
+                            else if (p.Pembayaran < p.TotalHarga)
+                            {
+                                <div class="small text-danger">kurang @Format.Rupiah(p.TotalHarga - p.Pembayaran)</div>
+                            }
+                        </td>
                         <td class="text-center">
                             @* Warna status ditentukan dengan Razor @if *@
                             @if (p.Status == Pesanan.StatusLunas)
