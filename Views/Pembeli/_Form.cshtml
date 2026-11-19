@@ -1,0 +1,31 @@
+@model PemesananTiketKonser.Models.Pembeli
+
+@* Form yang dipakai bersama oleh halaman Create dan Edit *@
+<div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+<div class="mb-3">
+    <label asp-for="Nama" class="form-label"></label>
+    <input asp-for="Nama" class="form-control" />
+    <span asp-validation-for="Nama" class="text-danger small"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Email" class="form-label"></label>
+    <input asp-for="Email" type="email" class="form-control" placeholder="nama@example.com" />
+    <span asp-validation-for="Email" class="text-danger small"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="NoHp" class="form-label"></label>
+    <input asp-for="NoHp" type="tel" class="form-control" placeholder="08xxxxxxxxxx" />
+    <span asp-validation-for="NoHp" class="text-danger small"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="NoIdentitas" class="form-label"></label>
+    <input asp-for="NoIdentitas" class="form-control" />
+    <span asp-validation-for="NoIdentitas" class="text-danger small"></span>
+</div>
+
+<button type="submit" class="btn btn-primary">Simpan</button>
+<a asp-action="Index" class="btn btn-outline-secondary">Batal</a>

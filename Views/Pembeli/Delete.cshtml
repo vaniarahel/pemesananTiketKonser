@@ -1,0 +1,37 @@
+@model PemesananTiketKonser.Models.Pembeli
+@{
+    ViewData["Title"] = "Hapus Pembeli";
+    var punyaPesanan = ViewBag.PunyaPesanan == true;
+}
+
+<h1 class="h3 mb-3">Hapus Pembeli</h1>
+
+@if (punyaPesanan)
+{
+    <div class="alert alert-warning">
+        Pembeli ini sudah punya pesanan, jadi <strong>tidak bisa dihapus</strong>.
+    </div>
+}
+else
+{
+    <div class="alert alert-danger">Yakin ingin menghapus pembeli ini? Data yang dihapus tidak bisa dikembalikan.</div>
+}
+
+<dl class="row">
+    <dt class="col-sm-3">Nama</dt>
+    <dd class="col-sm-9">@Model.Nama</dd>
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+    <dt class="col-sm-3">No HP</dt>
+    <dd class="col-sm-9">@Model.NoHp</dd>
+    <dt class="col-sm-3">No Identitas</dt>
+    <dd class="col-sm-9">@Model.NoIdentitas</dd>
+</dl>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    @if (!punyaPesanan)
+    {
+        <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+    }
+    <a asp-action="Index" class="btn btn-outline-secondary">Kembali</a>
+</form>
