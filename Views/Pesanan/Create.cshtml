@@ -1,0 +1,18 @@
+﻿@model PemesananTiketKonser.Models.Pesanan
+@{
+    ViewData["Title"] = "Pesan Tiket";
+}
+
+<h1 class="h3 mb-3">Pesan Tiket</h1>
+
+<div class="row">
+    <div class="col-lg-8">
+        <form asp-action="Create" method="post">
+            <partial name="_Form" model="Model" />
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
