@@ -1,0 +1,74 @@
+### Tes REST API Pesanan
+### Cara pakai di Visual Studio: jalankan aplikasi (F5), lalu klik "Send request" di atas tiap request.
+### Ganti port di bawah sesuai yang muncul di browser waktu aplikasi jalan.
+@host = https://localhost:7021
+
+### 1. GET semua pesanan -> 200
+GET {{host}}/api/pesanan
+
+### 2. GET satu pesanan -> 200
+GET {{host}}/api/pesanan/TK-0001
+
+### 3. GET pesanan yang tidak ada -> 404
+GET {{host}}/api/pesanan/TK-9999
+
+### 4. POST pesanan baru -> 201 Created (ID, total, dan status dibuat server)
+POST {{host}}/api/pesanan
+Content-Type: application/json
+
+{
+  "pembeliId": 2,
+  "kategoriId": 1,
+  "jumlahTiket": 2,
+  "pembayaran": 2000000
+}
+
+### 5. POST pembeli tidak ada -> 404
+POST {{host}}/api/pesanan
+Content-Type: application/json
+
+{
+  "pembeliId": 9999,
+  "kategoriId": 1,
+  "jumlahTiket": 1,
+  "pembayaran": 0
+}
+
+### 6. POST lebih dari 4 tiket -> 400
+POST {{host}}/api/pesanan
+Content-Type: application/json
+
+{
+  "pembeliId": 1,
+  "kategoriId": 1,
+  "jumlahTiket": 5,
+  "pembayaran": 0
+}
+
+### 7. PUT ubah pesanan -> 204 (ganti TK-0006 dengan ID hasil nomor 4)
+PUT {{host}}/api/pesanan/TK-0006
+Content-Type: application/json
+
+{
+  "pembeliId": 2,
+  "kategoriId": 1,
+  "jumlahTiket": 3,
+  "pembayaran": 1000000
+}
+
+### 8. Cek hasil PUT -> 200, status BELUM LUNAS
+GET {{host}}/api/pesanan/TK-0006
+
+### 9. PUT pesanan yang tidak ada -> 404
+PUT {{host}}/api/pesanan/TK-9999
+Content-Type: application/json
+
+{
+  "pembeliId": 1,
+  "kategoriId": 1,
+  "jumlahTiket": 1,
+  "pembayaran": 0
+}
+
+### 10. DELETE pesanan -> 204 (jalankan lagi -> 404)
+DELETE {{host}}/api/pesanan/TK-0006
