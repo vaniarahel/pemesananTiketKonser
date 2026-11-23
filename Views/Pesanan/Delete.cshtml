@@ -1,0 +1,36 @@
+﻿@model PemesananTiketKonser.Models.Pesanan
+@using PemesananTiketKonser.Helpers
+@using PemesananTiketKonser.Data
+@{
+    ViewData["Title"] = "Hapus Pesanan";
+}
+
+<h1 class="h3 mb-3">Hapus Pesanan @Model.IdPesanan</h1>
+
+<div class="alert alert-danger">
+    Yakin ingin menghapus pesanan ini? Kuota tiketnya akan dikembalikan, dan data yang dihapus tidak bisa dikembalikan.
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">ID Pesanan</dt>
+    <dd class="col-sm-9">@Model.IdPesanan</dd>
+    <dt class="col-sm-3">Tanggal</dt>
+    <dd class="col-sm-9">@Model.TglPesan.ToString("dd/MM/yyyy HH:mm")</dd>
+    <dt class="col-sm-3">Pembeli</dt>
+    <dd class="col-sm-9">@Model.Pembeli?.Nama</dd>
+    <dt class="col-sm-3">Kategori</dt>
+    <dd class="col-sm-9">@Model.Kategori?.NamaKategori</dd>
+    <dt class="col-sm-3">Jumlah Tiket</dt>
+    <dd class="col-sm-9">@Model.JumlahTiket</dd>
+    <dt class="col-sm-3">Total Harga</dt>
+    <dd class="col-sm-9">@Format.Rupiah(Model.TotalHarga)</dd>
+    <dt class="col-sm-3">Pembayaran</dt>
+    <dd class="col-sm-9">@Format.Rupiah(Model.Pembayaran)</dd>
+    <dt class="col-sm-3">Status</dt>
+    <dd class="col-sm-9">@PesananLogic.KeteranganBayar(Model.TotalHarga, Model.Pembayaran)</dd>
+</dl>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+    <a asp-action="Index" class="btn btn-outline-secondary">Kembali</a>
+</form>

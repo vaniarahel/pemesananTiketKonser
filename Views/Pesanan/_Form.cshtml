@@ -1,0 +1,81 @@
+﻿@model PemesananTiketKonser.Models.Pesanan
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using PemesananTiketKonser.Helpers
+@using PemesananTiketKonser.Models
+@{
+    var pilihanPembeli = (List<SelectListItem>)ViewBag.PilihanPembeli;
+    var pilihanKategori = (List<KategoriPilihan>)ViewBag.PilihanKategori;
+    string idPesanan = string.IsNullOrEmpty(Model.IdPesanan)
+        ? (ViewBag.IdPesananBerikutnya as string ?? "")
+        : Model.IdPesanan;
+    var kategoriTerpilih = pilihanKategori.FirstOrDefault(k => k.Id == Model.KategoriId);
+}
+
+@* Form yang dipakai bersama oleh halaman Create dan Edit *@
+<div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+<div class="mb-3">
+    <label class="form-label">ID Pesanan</label>
+    <input type="text" class="form-control" value="@idPesanan" readonly />
+    <div class="form-text">Dibuat otomatis oleh sistem.</div>
+</div>
+
+<div class="mb-3">
+    <label asp-for="PembeliId" class="form-label"></label>
+    <select asp-for="PembeliId" asp-items="pilihanPembeli" class="form-select">
+        <option value="0">-- Pilih pembeli --</option>
+    </select>
+    <span asp-validation-for="PembeliId" class="text-danger small"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="KategoriId" class="form-label"></label>
+    @* Option ditulis manual supaya bisa membawa data harga dan sisa kuota (dipakai JavaScript nanti) *@
+    <select asp-for="KategoriId" class="form-select" id="KategoriId">
+        <option value="0" data-harga="0" data-sisa="0">-- Pilih kategori --</option>
+        @foreach (var k in pilihanKategori)
+        {
+            var habis = k.Sisa <= 0;
+            <option value="@k.Id" data-harga="@k.Harga" data-sisa="@k.Sisa" selected="@(k.Id == Model.KategoriId)" disabled="@(habis && k.Id != Model.KategoriId)">
+                @k.NamaKategori - @Format.Rupiah(k.Harga) (sisa @(habis ? "habis" : Format.Angka(k.Sisa)))
+            </option>
+        }
+    </select>
+    <span asp-validation-for="KategoriId" class="text-danger small"></span>
+    <div class="form-text" id="infoKategori">
+        @if (kategoriTerpilih != null)
+        {
+            @:Harga satuan @Format.Rupiah(kategoriTerpilih.Harga), sisa kuota @Format.Angka(kategoriTerpilih.Sisa) tiket.
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6 mb-3">
+        <label asp-for="JumlahTiket" class="form-label"></label>
+        <input asp-for="JumlahTiket" type="number" min="1" max="@Pesanan.MaksTiketPerPesanan" class="form-control" />
+        <div class="form-text">Maksimal @Pesanan.MaksTiketPerPesanan tiket per pesanan.</div>
+        <span asp-validation-for="JumlahTiket" class="text-danger small"></span>
+    </div>
+    <div class="col-sm-6 mb-3">
+        <label asp-for="Pembayaran" class="form-label"></label>
+        <input asp-for="Pembayaran" type="number" min="0" class="form-control" />
+        <span asp-validation-for="Pembayaran" class="text-danger small"></span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6 mb-3">
+        <label class="form-label">Total Harga</label>
+        <input type="text" id="totalHarga" class="form-control" readonly
+               value="@(Model.TotalHarga > 0 ? Format.Rupiah(Model.TotalHarga) : "Dihitung otomatis")" />
+    </div>
+    <div class="col-sm-6 mb-3">
+        <label class="form-label">Status</label>
+        <input type="text" id="statusPesanan" class="form-control" readonly
+               value="@(Model.TotalHarga > 0 ? Model.Status : "Ditentukan otomatis")" />
+    </div>
+</div>
+
+<button type="submit" class="btn btn-primary">Simpan Pesanan</button>
+<a asp-action="Index" class="btn btn-outline-secondary">Batal</a>
