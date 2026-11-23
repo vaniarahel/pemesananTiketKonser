@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http
 @{
     // Nama controller yang sedang dibuka, untuk menandai menu yang aktif.
     var aktif = ViewContext.RouteData.Values["controller"]?.ToString();
@@ -70,6 +70,22 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @* Pesan berhasil / gagal dari controller (TempData) *@
+            @if (TempData["Sukses"] is string sukses)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @sukses
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                </div>
+            }
+            @if (TempData["Gagal"] is string gagal)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @gagal
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                </div>
+            }
+
             @RenderBody()
         </main>
     </div>

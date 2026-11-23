@@ -1,0 +1,25 @@
+@model PemesananTiketKonser.Models.KategoriTiket
+
+@* Form yang dipakai bersama oleh halaman Create dan Edit *@
+<div asp-validation-summary="ModelOnly" class="alert alert-danger py-2"></div>
+
+<div class="mb-3">
+    <label asp-for="NamaKategori" class="form-label"></label>
+    <input asp-for="NamaKategori" class="form-control" placeholder="Contoh: Festival" />
+    <span asp-validation-for="NamaKategori" class="text-danger small"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Harga" class="form-label"></label>
+    <input asp-for="Harga" type="number" min="1" class="form-control" placeholder="Contoh: 750000" />
+    <span asp-validation-for="Harga" class="text-danger small"></span>
+</div>
+
+<div class="mb-3">
+    <label asp-for="Kuota" class="form-label"></label>
+    <input asp-for="Kuota" type="number" min="0" class="form-control" placeholder="Contoh: 200" />
+    <span asp-validation-for="Kuota" class="text-danger small"></span>
+</div>
+
+<button type="submit" class="btn btn-primary">Simpan</button>
+<a asp-action="Index" class="btn btn-outline-secondary">Batal</a>

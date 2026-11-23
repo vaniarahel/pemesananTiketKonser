@@ -1,0 +1,36 @@
+@model PemesananTiketKonser.Models.KategoriTiket
+@using PemesananTiketKonser.Helpers
+@{
+    ViewData["Title"] = "Hapus Kategori";
+    var dipakai = ViewBag.DipakaiPesanan == true;
+}
+
+<h1 class="h3 mb-3">Hapus Kategori Tiket</h1>
+
+@if (dipakai)
+{
+    <div class="alert alert-warning">
+        Kategori ini sudah dipakai pesanan, jadi <strong>tidak bisa dihapus</strong>.
+    </div>
+}
+else
+{
+    <div class="alert alert-danger">Yakin ingin menghapus kategori ini? Data yang dihapus tidak bisa dikembalikan.</div>
+}
+
+<dl class="row">
+    <dt class="col-sm-3">Nama Kategori</dt>
+    <dd class="col-sm-9">@Model.NamaKategori</dd>
+    <dt class="col-sm-3">Harga</dt>
+    <dd class="col-sm-9">@Format.Rupiah(Model.Harga)</dd>
+    <dt class="col-sm-3">Kuota</dt>
+    <dd class="col-sm-9">@Format.Angka(Model.Kuota)</dd>
+</dl>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    @if (!dipakai)
+    {
+        <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+    }
+    <a asp-action="Index" class="btn btn-outline-secondary">Kembali</a>
+</form>
