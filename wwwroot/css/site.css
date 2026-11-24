@@ -1,16 +1,12 @@
-/* =========================================================
-   Tema aplikasi Pemesanan Tiket Konser
-   Warna utama ungu-pink ala panggung konser, dipakai di
-   navbar, tombol, link, kartu, dan tabel.
-   ========================================================= */
+/* Tampilan memakai warna bawaan Bootstrap. File ini hanya berisi aturan bawaan template
+   ditambah beberapa aturan kecil untuk keterbacaan dan tata letak. */
 :root {
-    --konser-primary: #6d28d9;
-    --konser-primary-gelap: #4c1d95;
-    --konser-aksen: #db2777;
-    --konser-latar: #f6f4fb;
+    /* Abu-abu, merah, dan hijau sedikit digelapkan supaya kontrasnya minimal 4.5:1 (juga di baris tabel belang). */
+    --bs-secondary-color: #555b61;
+    --bs-danger-rgb: 176, 42, 55;
+    --bs-success-rgb: 20, 108, 67;
 }
 
-/* ---------- Bawaan template (tetap dipakai) ---------- */
 html {
     font-size: 14px;
     position: relative;
@@ -23,9 +19,19 @@ html {
     }
 }
 
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
 body {
     margin-bottom: 60px;
-    background-color: var(--konser-latar);
+}
+
+/* Garis fokus keyboard yang tegas untuk link dan menu (bawaan Bootstrap terlalu tipis). */
+a:focus-visible, .nav-link:focus-visible, .navbar-brand:focus-visible {
+    outline: 2px solid #0d6efd;
+    outline-offset: 2px;
+    box-shadow: none;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -37,132 +43,64 @@ body {
     text-align: start;
 }
 
-/* ---------- Fokus input dan tombol ---------- */
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-select:focus, .form-check-input:focus {
-    border-color: #a78bfa;
-    box-shadow: 0 0 0 0.25rem rgba(109, 40, 217, .2);
-}
-
-/* ---------- Link ---------- */
-a {
-    color: var(--konser-primary);
-}
-
-    a:hover {
-        color: var(--konser-primary-gelap);
-    }
-
-/* ---------- Navbar ---------- */
-.navbar-konser {
-    background-color: var(--konser-primary);
-    box-shadow: 0 .25rem .75rem rgba(59, 7, 100, .25);
-}
-
-    .navbar-konser .navbar-brand {
-        color: #fff;
-        letter-spacing: .3px;
-    }
-
-    .navbar-konser .nav-link {
-        color: rgba(255, 255, 255, .8);
-        border-radius: .375rem;
-    }
-
-        .navbar-konser .nav-link:hover,
-        .navbar-konser .nav-link:focus {
-            color: #fff;
-            background-color: rgba(255, 255, 255, .12);
-        }
-
-        .navbar-konser .nav-link.active {
-            color: #fff;
-            font-weight: 600;
-            background-color: rgba(255, 255, 255, .2);
-        }
-
-/* ---------- Tombol ---------- */
-.btn-primary {
-    --bs-btn-bg: var(--konser-primary);
-    --bs-btn-border-color: var(--konser-primary);
-    --bs-btn-hover-bg: var(--konser-primary-gelap);
-    --bs-btn-hover-border-color: var(--konser-primary-gelap);
-    --bs-btn-active-bg: var(--konser-primary-gelap);
-    --bs-btn-active-border-color: var(--konser-primary-gelap);
-    --bs-btn-disabled-bg: var(--konser-primary);
-    --bs-btn-disabled-border-color: var(--konser-primary);
-}
-
-.btn-outline-primary {
-    --bs-btn-color: var(--konser-primary);
-    --bs-btn-border-color: var(--konser-primary);
-    --bs-btn-hover-bg: var(--konser-primary);
-    --bs-btn-hover-border-color: var(--konser-primary);
-    --bs-btn-active-bg: var(--konser-primary-gelap);
-    --bs-btn-active-border-color: var(--konser-primary-gelap);
-}
-
-/* ---------- Judul halaman ---------- */
-main h1 {
-    color: #2e1065;
-}
-
-/* ---------- Input yang diisi otomatis (tidak bisa diketik) ---------- */
+/* Input yang diisi otomatis (tidak bisa diketik), misalnya Total Harga. */
 .form-control[readonly] {
-    background-color: #f3f0fa;
+    background-color: var(--bs-tertiary-bg);
     border-style: dashed;
 }
 
-/* ---------- Kartu ---------- */
-.card {
-    border-color: #e9e3f7;
-    border-radius: .75rem;
-    box-shadow: 0 .125rem .5rem rgba(46, 16, 101, .06);
+/* Satu baris di "Perlu ditagih": kode | nama | (nominal + tombol). Di HP nominal + tombol turun ke bawah. */
+.tagih-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .5rem 1rem;
+    align-items: center;
 }
 
-.card-header {
-    background-color: #faf8ff;
-    border-bottom-color: #e9e3f7;
+.tagih-aksi {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
 }
 
-/* ---------- Tabel ---------- */
-.table-responsive {
-    background-color: #fff;
-    border-radius: .75rem;
-    box-shadow: 0 .125rem .5rem rgba(46, 16, 101, .06);
-}
-
-.table > thead.table-light th,
-.table > tfoot.table-light td {
-    background-color: #f1ecfb;
-    color: #3b0764;
-    border-bottom-color: #ddd3f3;
-}
-
-.table {
-    margin-bottom: 0;
-}
-
-/* ---------- Halaman Login ---------- */
-.login-card {
-    border: 0;
-    overflow: hidden;
-}
-
-.login-banner {
-    background-color: var(--konser-primary);
-    color: #fff;
-    padding: 1.75rem 1.5rem 1.5rem;
-    text-align: center;
-}
-
-    .login-banner img {
-        background-color: #fff;
-        border-radius: 1rem;
-        padding: .4rem;
-        box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .2);
+@media (min-width: 576px) {
+    .tagih-item {
+        grid-template-columns: auto 1fr auto;
     }
 
-/* ---------- Footer ---------- */
-.footer {
-    background-color: #fff;
+    .tagih-aksi {
+        grid-column: auto;
+    }
+}
+
+/* Semua yang bisa diklik menampilkan kursor tangan. */
+a[href], button:not(:disabled), select:not(:disabled), summary, label[for], [role="button"] {
+    cursor: pointer;
+}
+
+button:disabled, .btn.disabled, select:disabled {
+    cursor: not-allowed;
+}
+
+/* Di HP, tombol dan menu minimal 44px supaya mudah ditekan jari. */
+@media (max-width: 575.98px) {
+    .btn, .navbar-nav .nav-link {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navbar-nav .nav-link {
+        justify-content: flex-start;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+    }
 }

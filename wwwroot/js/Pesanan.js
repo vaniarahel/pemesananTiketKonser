@@ -1,7 +1,6 @@
 ﻿// pesanan.js
-// Menghitung Total Harga dan Status secara langsung di halaman Pesan Tiket / Edit Pesanan,
-// tanpa reload. Data harga dan sisa kuota diambil dari atribut data-harga dan data-sisa
-// pada pilihan kategori. Ini hanya tampilan perkiraan: server tetap menghitung ulang saat disimpan.
+// Hitung Total Harga dan Status langsung di form pesanan, dari data-harga dan data-sisa kategori.
+// Hanya perkiraan tampilan: server tetap menghitung ulang saat disimpan.
 (function () {
     const kategori = document.getElementById("KategoriId");
     const jumlah = document.getElementById("JumlahTiket");
@@ -27,7 +26,7 @@
         const qty = parseInt(jumlah.value, 10) || 0;
         const uang = bayar ? parseInt(bayar.value, 10) || 0 : 0;
 
-        // ---------- Info harga dan sisa kuota ----------
+        // Info harga dan sisa kuota.
         let pesanInfo;
         let infoError = false;
         if (harga === 0) {
@@ -45,7 +44,7 @@
         info.textContent = pesanInfo;
         info.classList.toggle("text-danger", infoError);
 
-        // ---------- Total harga dan status ----------
+        // Total harga dan status.
         if (harga === 0 || qty < 1) {
             total.value = "Dihitung otomatis";
             if (status) {

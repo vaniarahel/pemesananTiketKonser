@@ -44,12 +44,12 @@ public class HomeController : Controller
                 Kategori = k,
                 Terjual = terjual.GetValueOrDefault(k.Id)
             }).ToList(),
-            PesananTerbaru = await _db.Pesanan
+            PerluDitagih = await _db.Pesanan
                 .AsNoTracking()
                 .Include(p => p.Pembeli)
                 .Include(p => p.Kategori)
-                .OrderByDescending(p => p.TglPesan)
-                .Take(5)
+                .Where(p => p.Status == Pesanan.StatusBelumLunas)
+                .OrderBy(p => p.TglPesan)
                 .ToListAsync()
         };
 

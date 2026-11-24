@@ -30,7 +30,7 @@
 
 <div class="mb-3">
     <label asp-for="KategoriId" class="form-label"></label>
-    @* Option ditulis manual supaya bisa membawa data harga dan sisa kuota (dipakai JavaScript nanti) *@
+    @* Option ditulis manual supaya bisa membawa data harga dan sisa kuota (dipakai pesanan.js) *@
     <select asp-for="KategoriId" class="form-select" id="KategoriId">
         <option value="0" data-harga="0" data-sisa="0">-- Pilih kategori --</option>
         @foreach (var k in pilihanKategori)

@@ -7,7 +7,7 @@ using PemesananTiketKonser.Models;
 
 namespace PemesananTiketKonser.Controllers;
 
-// Pemesanan Tiket: tampil, tambah, edit, hapus. Semua halaman wajib login.
+// Pemesanan Tiket: tampil, tambah, edit, hapus. Hanya untuk akun dengan peran Admin.
 [WajibLogin(DaftarPeran.Admin)]
 public class PesananController : Controller
 {

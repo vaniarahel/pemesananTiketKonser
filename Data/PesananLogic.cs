@@ -3,8 +3,8 @@ using PemesananTiketKonser.Models;
 
 namespace PemesananTiketKonser.Data;
 
-// Aturan bisnis pemesanan tiket. Dipakai oleh PesananController (MVC)
-// dan nanti juga oleh PesananApiController (REST API), supaya aturannya sama persis.
+// Aturan bisnis pemesanan tiket. Dipakai halaman Pemesanan, Pesanan Saya,
+// dan REST API, supaya aturannya sama persis.
 public static class PesananLogic
 {
     private const string Prefix = "TK-";
