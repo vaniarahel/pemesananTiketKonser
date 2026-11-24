@@ -1,0 +1,36 @@
+{
+  // Lingkungan demo di GitHub Codespaces: .NET 10 + MySQL 8.4 (container terpisah bernama "db").
+  "name": "Pemesanan Tiket Konser",
+  "dockerComposeFile": "docker-compose.mysql.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "shutdownAction": "stopCompose",
+
+  "features": {
+    "ghcr.io/devcontainers/features/dotnet:2": {
+      "version": "10.0"
+    }
+  },
+
+  // Pengganti User Secrets di Codespaces. Host "db" = nama service MySQL di docker-compose.
+  "containerEnv": {
+    "ConnectionStrings__Default": "server=db;port=3306;user=root;password=konser123;database=db_tiket_konser"
+  },
+
+  "forwardPorts": [5000],
+  "portsAttributes": {
+    "5000": {
+      "label": "Aplikasi Tiket Konser",
+      "onAutoForward": "openBrowser"
+    }
+  },
+
+  // Dijalankan sekali saat Codespace dibuat: pasang dotnet-ef, restore, buat tabel + data awal.
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-dotnettools.csdevkit"]
+    }
+  }
+}
