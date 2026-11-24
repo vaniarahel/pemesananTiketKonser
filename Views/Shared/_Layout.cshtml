@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Http
+@using PemesananTiketKonser.Helpers
 @{
     // Nama controller yang sedang dibuka, untuk menandai menu yang aktif.
     var aktif = ViewContext.RouteData.Values["controller"]?.ToString();
@@ -6,8 +7,13 @@
     // Username admin yang sedang login (null kalau belum login).
     var admin = Context.Session.GetString("Admin");
 
+    // Admin melihat semua menu admin; Pembeli hanya melihat Pesan Tiket dan Pesanan Saya.
+    var isAdmin = Context.IsAdmin();
+    var isPembeli = Context.IsPembeli();
+    var peran = Context.Peran();
+
     string Kelas(string controller) =>
-        aktif == controller ? "nav-link text-dark fw-bold active" : "nav-link text-dark";
+        aktif == controller ? "nav-link active" : "nav-link";
 }
 <!DOCTYPE html>
 <html lang="id">
@@ -17,39 +23,57 @@
     <title>@ViewData["Title"] - Pemesanan Tiket Konser</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="icon" type="image/svg+xml" href="~/images/logo.svg" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PemesananTiketKonser.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark navbar-konser mb-4">
             <div class="container-fluid">
-                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">Tiket Konser</a>
+                <a class="navbar-brand fw-bold d-flex align-items-center gap-2" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.svg" alt="" width="30" height="30" />
+                    Tiket Konser
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     @* Menu kiri: semua fitur aplikasi, hanya muncul kalau sudah login *@
-                    @if (admin != null)
+                    @* Menu pembeli *@
+                    @if (isPembeli)
                     {
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="@Kelas("Home")" asp-controller="Home" asp-action="Index">Menu Utama</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="@Kelas("Pembeli")" asp-controller="Pembeli" asp-action="Index">Data Pembeli</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="@Kelas("Kategori")" asp-controller="Kategori" asp-action="Index">Kategori Tiket</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="@Kelas("Pesanan")" asp-controller="Pesanan" asp-action="Index">Pemesanan Tiket</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="@Kelas("Laporan")" asp-controller="Laporan" asp-action="Index">Laporan Penjualan</a>
-                        </li>
-                    </ul>
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="@(aktif == "PesananSaya" && ViewContext.RouteData.Values["action"]?.ToString() == "Create" ? "nav-link active" : "nav-link")" asp-controller="PesananSaya" asp-action="Create">Pesan Tiket</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="@(aktif == "PesananSaya" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "nav-link active" : "nav-link")" asp-controller="PesananSaya" asp-action="Index">Pesanan Saya</a>
+                            </li>
+                        </ul>
+                    }
+
+                    @* Menu admin *@
+                    @if (isAdmin)
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="@Kelas("Home")" asp-controller="Home" asp-action="Index">Menu Utama</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="@Kelas("Pembeli")" asp-controller="Pembeli" asp-action="Index">Data Pembeli</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="@Kelas("Kategori")" asp-controller="Kategori" asp-action="Index">Kategori Tiket</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="@Kelas("Pesanan")" asp-controller="Pesanan" asp-action="Index">Pemesanan Tiket</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="@Kelas("Laporan")" asp-controller="Laporan" asp-action="Index">Laporan Penjualan</a>
+                            </li>
+                        </ul>
                     }
 
                     @* Menu kanan: nama admin + Logout, hanya muncul kalau sudah login *@
@@ -57,10 +81,10 @@
                     {
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <span class="nav-link text-muted">Halo, @admin</span>
+                                <span class="nav-link text-white-50">Halo, @admin (@peran)</span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-danger" asp-controller="Account" asp-action="Logout">Logout</a>
+                                <a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a>
                             </li>
                         </ul>
                     }

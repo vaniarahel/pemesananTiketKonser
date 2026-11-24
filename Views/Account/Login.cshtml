@@ -3,12 +3,15 @@
     ViewData["Title"] = "Login";
 }
 
-<div class="row justify-content-center mt-5">
+<div class="row justify-content-center mt-4">
     <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-        <div class="card shadow-sm">
+        <div class="card login-card shadow">
+            <div class="login-banner">
+                <img src="~/images/logo.svg" alt="Logo Tiket Konser" width="64" height="64" class="mb-3" />
+                <h1 class="h4 mb-1 text-white">Pemesanan Tiket Konser</h1>
+                <p class="mb-0 text-white-50">Silakan login</p>
+            </div>
             <div class="card-body p-4">
-                <h1 class="h4 text-center mb-1">Pemesanan Tiket Konser</h1>
-                <p class="text-center text-muted mb-4">Silakan login sebagai admin</p>
 
                 <form asp-action="Login" method="post">
                     @* Pesan error login (username/password salah) *@
@@ -28,6 +31,10 @@
 
                     <button type="submit" class="btn btn-primary w-100">Login</button>
                 </form>
+
+                <p class="text-center mt-3 mb-0 small">
+                    Belum punya akun? <a asp-action="Daftar">Daftar sebagai pembeli</a>
+                </p>
             </div>
         </div>
     </div>

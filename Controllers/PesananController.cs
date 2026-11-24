@@ -8,7 +8,7 @@ using PemesananTiketKonser.Models;
 namespace PemesananTiketKonser.Controllers;
 
 // Pemesanan Tiket: tampil, tambah, edit, hapus. Semua halaman wajib login.
-[WajibLogin]
+[WajibLogin(DaftarPeran.Admin)]
 public class PesananController : Controller
 {
     private readonly ApplicationDbContext _db;

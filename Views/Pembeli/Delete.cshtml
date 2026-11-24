@@ -2,14 +2,16 @@
 @{
     ViewData["Title"] = "Hapus Pembeli";
     var punyaPesanan = ViewBag.PunyaPesanan == true;
+    var punyaAkun = ViewBag.PunyaAkun == true;
+    var tidakBisa = punyaPesanan || punyaAkun;
 }
 
 <h1 class="h3 mb-3">Hapus Pembeli</h1>
 
-@if (punyaPesanan)
+@if (tidakBisa)
 {
     <div class="alert alert-warning">
-        Pembeli ini sudah punya pesanan, jadi <strong>tidak bisa dihapus</strong>.
+        Pembeli ini @(punyaPesanan ? "sudah punya pesanan" : "punya akun login"), jadi <strong>tidak bisa dihapus</strong>.
     </div>
 }
 else
@@ -29,7 +31,7 @@ else
 </dl>
 
 <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
-    @if (!punyaPesanan)
+    @if (!tidakBisa)
     {
         <button type="submit" class="btn btn-danger">Ya, Hapus</button>
     }

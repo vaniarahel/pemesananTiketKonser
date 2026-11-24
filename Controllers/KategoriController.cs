@@ -6,8 +6,8 @@ using PemesananTiketKonser.Models;
 
 namespace PemesananTiketKonser.Controllers;
 
-// CRUD Kategori Tiket. Semua halaman wajib login.
-[WajibLogin]
+// CRUD Kategori Tiket. Hanya untuk akun dengan peran Admin.
+[WajibLogin(DaftarPeran.Admin)]
 public class KategoriController : Controller
 {
     private readonly ApplicationDbContext _db;

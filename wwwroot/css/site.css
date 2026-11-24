@@ -1,31 +1,168 @@
+/* =========================================================
+   Tema aplikasi Pemesanan Tiket Konser
+   Warna utama ungu-pink ala panggung konser, dipakai di
+   navbar, tombol, link, kartu, dan tabel.
+   ========================================================= */
+:root {
+    --konser-primary: #6d28d9;
+    --konser-primary-gelap: #4c1d95;
+    --konser-aksen: #db2777;
+    --konser-latar: #f6f4fb;
+}
+
+/* ---------- Bawaan template (tetap dipakai) ---------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: var(--konser-latar);
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+    color: var(--bs-secondary-color);
+    text-align: end;
 }
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    text-align: start;
+}
+
+/* ---------- Fokus input dan tombol ---------- */
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-select:focus, .form-check-input:focus {
+    border-color: #a78bfa;
+    box-shadow: 0 0 0 0.25rem rgba(109, 40, 217, .2);
+}
+
+/* ---------- Link ---------- */
+a {
+    color: var(--konser-primary);
+}
+
+    a:hover {
+        color: var(--konser-primary-gelap);
+    }
+
+/* ---------- Navbar ---------- */
+.navbar-konser {
+    background-color: var(--konser-primary);
+    box-shadow: 0 .25rem .75rem rgba(59, 7, 100, .25);
+}
+
+    .navbar-konser .navbar-brand {
+        color: #fff;
+        letter-spacing: .3px;
+    }
+
+    .navbar-konser .nav-link {
+        color: rgba(255, 255, 255, .8);
+        border-radius: .375rem;
+    }
+
+        .navbar-konser .nav-link:hover,
+        .navbar-konser .nav-link:focus {
+            color: #fff;
+            background-color: rgba(255, 255, 255, .12);
+        }
+
+        .navbar-konser .nav-link.active {
+            color: #fff;
+            font-weight: 600;
+            background-color: rgba(255, 255, 255, .2);
+        }
+
+/* ---------- Tombol ---------- */
+.btn-primary {
+    --bs-btn-bg: var(--konser-primary);
+    --bs-btn-border-color: var(--konser-primary);
+    --bs-btn-hover-bg: var(--konser-primary-gelap);
+    --bs-btn-hover-border-color: var(--konser-primary-gelap);
+    --bs-btn-active-bg: var(--konser-primary-gelap);
+    --bs-btn-active-border-color: var(--konser-primary-gelap);
+    --bs-btn-disabled-bg: var(--konser-primary);
+    --bs-btn-disabled-border-color: var(--konser-primary);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--konser-primary);
+    --bs-btn-border-color: var(--konser-primary);
+    --bs-btn-hover-bg: var(--konser-primary);
+    --bs-btn-hover-border-color: var(--konser-primary);
+    --bs-btn-active-bg: var(--konser-primary-gelap);
+    --bs-btn-active-border-color: var(--konser-primary-gelap);
+}
+
+/* ---------- Judul halaman ---------- */
+main h1 {
+    color: #2e1065;
+}
+
+/* ---------- Input yang diisi otomatis (tidak bisa diketik) ---------- */
+.form-control[readonly] {
+    background-color: #f3f0fa;
+    border-style: dashed;
+}
+
+/* ---------- Kartu ---------- */
+.card {
+    border-color: #e9e3f7;
+    border-radius: .75rem;
+    box-shadow: 0 .125rem .5rem rgba(46, 16, 101, .06);
+}
+
+.card-header {
+    background-color: #faf8ff;
+    border-bottom-color: #e9e3f7;
+}
+
+/* ---------- Tabel ---------- */
+.table-responsive {
+    background-color: #fff;
+    border-radius: .75rem;
+    box-shadow: 0 .125rem .5rem rgba(46, 16, 101, .06);
+}
+
+.table > thead.table-light th,
+.table > tfoot.table-light td {
+    background-color: #f1ecfb;
+    color: #3b0764;
+    border-bottom-color: #ddd3f3;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+/* ---------- Halaman Login ---------- */
+.login-card {
+    border: 0;
+    overflow: hidden;
+}
+
+.login-banner {
+    background-color: var(--konser-primary);
+    color: #fff;
+    padding: 1.75rem 1.5rem 1.5rem;
+    text-align: center;
+}
+
+    .login-banner img {
+        background-color: #fff;
+        border-radius: 1rem;
+        padding: .4rem;
+        box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .2);
+    }
+
+/* ---------- Footer ---------- */
+.footer {
+    background-color: #fff;
 }
