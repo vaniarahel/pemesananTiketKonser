@@ -1,0 +1,2 @@
+# Script shell harus pakai akhir baris LF supaya bisa dijalankan di Linux (Codespaces).
+*.sh text eol=lf
