@@ -3,15 +3,12 @@
     ViewData["Title"] = "Daftar Akun";
 }
 
-<div class="row justify-content-center mt-4">
+<div class="row justify-content-center mt-5">
     <div class="col-12 col-md-8 col-lg-6">
-        <div class="card login-card shadow">
-            <div class="login-banner">
-                <img src="~/images/logo.svg" alt="Logo Tiket Konser" width="56" height="56" class="mb-3" />
-                <h1 class="h4 mb-1 text-white">Daftar Akun Pembeli</h1>
-                <p class="mb-0 text-white-50">Buat akun untuk memesan tiket konser</p>
-            </div>
+        <div class="card shadow-sm">
             <div class="card-body p-4">
+                <h1 class="h4 text-center mb-1">Daftar Akun Pembeli</h1>
+                <p class="text-center text-muted mb-4">Buat akun untuk memesan tiket konser</p>
                 <form asp-action="Daftar" method="post">
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2" role="alert"></div>
 

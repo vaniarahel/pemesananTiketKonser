@@ -15,5 +15,7 @@ public class DashboardViewModel
     public int BelumDibayar { get; set; }
 
     public List<KategoriDenganSisa> Kuota { get; set; } = new();
-    public List<Pesanan> PesananTerbaru { get; set; } = new();
+
+    // Pesanan BELUM LUNAS, yang paling lama di atas (paling perlu ditagih).
+    public List<Pesanan> PerluDitagih { get; set; } = new();
 }

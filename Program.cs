@@ -13,10 +13,9 @@ var connectionString = builder.Configuration.GetConnectionString("Default")
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Session: menyimpan status login admin selama 30 menit tanpa aktivitas.
+// Session: menyimpan status login selama 30 menit tanpa aktivitas.
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -26,7 +25,6 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

@@ -41,17 +41,14 @@ public class AccountController : Controller
 
         var input = model.Username.Trim();
 
-        // 1) Cari akun berdasarkan username (admin) atau email (pembeli).
+        // Admin login pakai username, pembeli pakai email.
         var akun = await _db.Admin
             .AsNoTracking()
             .Include(a => a.Pembeli)
             .FirstOrDefaultAsync(a =>
                 a.Username == input || (a.Pembeli != null && a.Pembeli.Email == input));
 
-        // 2) Cocokkan password di C#, bukan di SQL.
-        //    MySQL membandingkan teks tanpa membedakan huruf besar/kecil,
-        //    jadi "ADMIN123" akan dianggap sama dengan "admin123" kalau dicek di SQL.
-        //    string.Equals dengan Ordinal membedakan huruf besar/kecil.
+        // Password dicek di C#, bukan di SQL: MySQL tidak membedakan huruf besar/kecil.
         if (akun != null && !string.Equals(akun.Password, model.Password, StringComparison.Ordinal))
         {
             akun = null;

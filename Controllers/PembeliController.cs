@@ -6,7 +6,7 @@ using PemesananTiketKonser.Models;
 
 namespace PemesananTiketKonser.Controllers;
 
-// CRUD Data Pembeli + Cari. Semua halaman wajib login.
+// CRUD Data Pembeli + Cari. Hanya untuk akun dengan peran Admin.
 [WajibLogin(DaftarPeran.Admin)]
 public class PembeliController : Controller
 {

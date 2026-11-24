@@ -6,7 +6,7 @@ using PemesananTiketKonser.Models;
 
 namespace PemesananTiketKonser.Controllers;  //halo
 
-// Laporan Penjualan: rekap transaksi + ringkasan per kategori. Wajib login.
+// Laporan Penjualan: rekap transaksi + ringkasan per kategori. Hanya untuk Admin.
 [WajibLogin(DaftarPeran.Admin)]
 public class LaporanController : Controller
 {

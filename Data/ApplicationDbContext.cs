@@ -21,7 +21,7 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // ---------- Data yang tidak boleh kembar (UNIQUE) ----------
+        // Data yang tidak boleh kembar (UNIQUE).
         modelBuilder.Entity<Admin>().HasIndex(a => a.Username).IsUnique();
         modelBuilder.Entity<Pembeli>().HasIndex(p => p.Email).IsUnique();
         modelBuilder.Entity<KategoriTiket>().HasIndex(k => k.NamaKategori).IsUnique();
@@ -29,7 +29,7 @@ public class ApplicationDbContext : DbContext
         // Satu data pembeli hanya boleh punya satu akun login.
         modelBuilder.Entity<Admin>().HasIndex(a => a.PembeliId).IsUnique();
 
-        // ---------- Relasi (FOREIGN KEY) ----------
+        // Relasi (FOREIGN KEY).
         // Pembeli / kategori yang sudah punya pesanan tidak bisa dihapus.
         modelBuilder.Entity<Pesanan>()
             .HasOne(p => p.Pembeli)
@@ -51,7 +51,7 @@ public class ApplicationDbContext : DbContext
             .HasForeignKey(a => a.PembeliId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // ---------- Data dummy (seeding) ----------
+        // Data dummy (seeding).
         // Akun login (password disimpan apa adanya).
         // Admin  : username = admin, password = admin123
         // Pembeli: username = email masing-masing, password = nama depan + 123

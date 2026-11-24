@@ -12,7 +12,7 @@
 
 @if (Model.Count == 0)
 {
-    <div class="alert alert-info">Belum ada pesanan.</div>
+    <div class="alert alert-info">Belum ada pesanan. Klik <strong>+ Pesan Tiket</strong> untuk mencatat pesanan pertama.</div>
 }
 else
 {
@@ -43,7 +43,6 @@ else
                         <td class="text-end text-nowrap">@Format.Rupiah(p.TotalHarga)</td>
                         <td class="text-end text-nowrap">
                             @Format.Rupiah(p.Pembayaran)
-                            @* Keterangan kurang / kembalian di bawah nominal pembayaran *@
                             @if (p.Pembayaran > p.TotalHarga)
                             {
                                 <div class="small text-primary">kembalian @Format.Rupiah(p.Pembayaran - p.TotalHarga)</div>
@@ -54,7 +53,6 @@ else
                             }
                         </td>
                         <td class="text-center">
-                            @* Warna status ditentukan dengan Razor @if *@
                             @if (p.Status == Pesanan.StatusLunas)
                             {
                                 <span class="badge bg-success">LUNAS</span>
