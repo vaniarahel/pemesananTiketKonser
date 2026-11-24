@@ -35,12 +35,23 @@ namespace PemesananTiketKonser.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("varchar(64)");
 
+                    b.Property<int?>("PembeliId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Peran")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PembeliId")
+                        .IsUnique();
 
                     b.HasIndex("Username")
                         .IsUnique();
@@ -51,8 +62,49 @@ namespace PemesananTiketKonser.Migrations
                         new
                         {
                             Id = 1,
-                            Password = "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+                            Password = "admin123",
+                            Peran = "Admin",
                             Username = "admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Password = "vania123",
+                            PembeliId = 1,
+                            Peran = "Pembeli",
+                            Username = "2481016@unai.edu"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Password = "josch123",
+                            PembeliId = 2,
+                            Peran = "Pembeli",
+                            Username = "2481034@unai.edu"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Password = "ester123",
+                            PembeliId = 3,
+                            Peran = "Pembeli",
+                            Username = "2481019@unai.edu"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Password = "jessica123",
+                            PembeliId = 4,
+                            Peran = "Pembeli",
+                            Username = "2481026@unai.edu"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Password = "ivan123",
+                            PembeliId = 5,
+                            Peran = "Pembeli",
+                            Username = "2481051@unai.edu"
                         });
                 });
 
@@ -86,23 +138,51 @@ namespace PemesananTiketKonser.Migrations
                         new
                         {
                             Id = 1,
-                            Harga = 750000,
-                            Kuota = 200,
+                            Harga = 2500000,
+                            Kuota = 80,
                             NamaKategori = "Festival"
                         },
                         new
                         {
                             Id = 2,
-                            Harga = 1500000,
+                            Harga = 4000000,
                             Kuota = 50,
                             NamaKategori = "VIP"
                         },
                         new
                         {
                             Id = 3,
-                            Harga = 500000,
-                            Kuota = 300,
-                            NamaKategori = "Tribun"
+                            Harga = 2650000,
+                            Kuota = 100,
+                            NamaKategori = "CAT 1"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Harga = 1850000,
+                            Kuota = 100,
+                            NamaKategori = "CAT 2"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Harga = 2350000,
+                            Kuota = 150,
+                            NamaKategori = "CAT 3"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Harga = 1250000,
+                            Kuota = 150,
+                            NamaKategori = "CAT 4"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Harga = 850000,
+                            Kuota = 80,
+                            NamaKategori = "CAT 5"
                         });
                 });
 
@@ -145,40 +225,40 @@ namespace PemesananTiketKonser.Migrations
                         new
                         {
                             Id = 1,
-                            Email = "andi.pratama@example.com",
-                            Nama = "Andi Pratama",
+                            Email = "2481016@unai.edu",
+                            Nama = "Vania Widiyanto",
                             NoHp = "081211110001",
                             NoIdentitas = "3273010101010001"
                         },
                         new
                         {
                             Id = 2,
-                            Email = "bunga.lestari@example.com",
-                            Nama = "Bunga Lestari",
+                            Email = "2481034@unai.edu",
+                            Nama = "Josch Matanari",
                             NoHp = "081211110002",
                             NoIdentitas = "3273010101010002"
                         },
                         new
                         {
                             Id = 3,
-                            Email = "citra.maharani@example.com",
-                            Nama = "Citra Maharani",
+                            Email = "2481019@unai.edu",
+                            Nama = "Ester Manurung",
                             NoHp = "081211110003",
                             NoIdentitas = "3273010101010003"
                         },
                         new
                         {
                             Id = 4,
-                            Email = "dimas.saputra@example.com",
-                            Nama = "Dimas Saputra",
+                            Email = "2481026@unai.edu",
+                            Nama = "Jessica Shabrina",
                             NoHp = "081211110004",
                             NoIdentitas = "3273010101010004"
                         },
                         new
                         {
                             Id = 5,
-                            Email = "eka.wulandari@example.com",
-                            Nama = "Eka Wulandari",
+                            Email = "2481051@unai.edu",
+                            Nama = "Ivan Halim",
                             NoHp = "081211110005",
                             NoIdentitas = "3273010101010005"
                         });
@@ -238,11 +318,11 @@ namespace PemesananTiketKonser.Migrations
                             IdPesanan = "TK-0001",
                             JumlahTiket = 2,
                             KategoriId = 1,
-                            Pembayaran = 1500000,
+                            Pembayaran = 5000000,
                             PembeliId = 1,
                             Status = "LUNAS",
                             TglPesan = new DateTime(2026, 11, 10, 10, 15, 0, 0, DateTimeKind.Unspecified),
-                            TotalHarga = 1500000
+                            TotalHarga = 5000000
                         },
                         new
                         {
@@ -254,7 +334,7 @@ namespace PemesananTiketKonser.Migrations
                             PembeliId = 2,
                             Status = "BELUM LUNAS",
                             TglPesan = new DateTime(2026, 11, 11, 13, 40, 0, 0, DateTimeKind.Unspecified),
-                            TotalHarga = 1500000
+                            TotalHarga = 4000000
                         },
                         new
                         {
@@ -262,11 +342,11 @@ namespace PemesananTiketKonser.Migrations
                             IdPesanan = "TK-0003",
                             JumlahTiket = 4,
                             KategoriId = 3,
-                            Pembayaran = 2000000,
+                            Pembayaran = 10600000,
                             PembeliId = 3,
                             Status = "LUNAS",
                             TglPesan = new DateTime(2026, 11, 12, 9, 5, 0, 0, DateTimeKind.Unspecified),
-                            TotalHarga = 2000000
+                            TotalHarga = 10600000
                         },
                         new
                         {
@@ -278,7 +358,7 @@ namespace PemesananTiketKonser.Migrations
                             PembeliId = 4,
                             Status = "BELUM LUNAS",
                             TglPesan = new DateTime(2026, 11, 14, 16, 20, 0, 0, DateTimeKind.Unspecified),
-                            TotalHarga = 2250000
+                            TotalHarga = 7500000
                         },
                         new
                         {
@@ -286,12 +366,22 @@ namespace PemesananTiketKonser.Migrations
                             IdPesanan = "TK-0005",
                             JumlahTiket = 2,
                             KategoriId = 2,
-                            Pembayaran = 3000000,
+                            Pembayaran = 8000000,
                             PembeliId = 1,
                             Status = "LUNAS",
                             TglPesan = new DateTime(2026, 11, 15, 11, 0, 0, 0, DateTimeKind.Unspecified),
-                            TotalHarga = 3000000
+                            TotalHarga = 8000000
                         });
+                });
+
+            modelBuilder.Entity("PemesananTiketKonser.Models.Admin", b =>
+                {
+                    b.HasOne("PemesananTiketKonser.Models.Pembeli", "Pembeli")
+                        .WithMany()
+                        .HasForeignKey("PembeliId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Pembeli");
                 });
 
             modelBuilder.Entity("PemesananTiketKonser.Models.Pesanan", b =>

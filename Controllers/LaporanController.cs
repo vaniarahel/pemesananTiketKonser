@@ -4,10 +4,10 @@ using PemesananTiketKonser.Data;
 using PemesananTiketKonser.Filters;
 using PemesananTiketKonser.Models;
 
-namespace PemesananTiketKonser.Controllers;
+namespace PemesananTiketKonser.Controllers;  //halo
 
 // Laporan Penjualan: rekap transaksi + ringkasan per kategori. Wajib login.
-[WajibLogin]
+[WajibLogin(DaftarPeran.Admin)]
 public class LaporanController : Controller
 {
     private readonly ApplicationDbContext _db;

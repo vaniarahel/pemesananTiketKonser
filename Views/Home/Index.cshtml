@@ -1,17 +1,129 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model PemesananTiketKonser.Models.DashboardViewModel
+@using PemesananTiketKonser.Helpers
+@using PemesananTiketKonser.Models
+@{
+    ViewData["Title"] = "Menu Utama";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Pemesanan Tiket Konser</h1>
+<h1 class="h3 mb-1">Menu Utama</h1>
+<p class="text-muted mb-4">Ringkasan penjualan tiket konser.</p>
 
-    @* TES KONEKSI SEMENTARA *@
-    @if (ViewBag.ErrorDb != null)
-    {
-        <p style="color: red;">Koneksi database GAGAL: @ViewBag.ErrorDb</p>
-    }
-    else
-    {
-        <p style="color: green;">Koneksi database berhasil. Jumlah kategori tiket: <strong>@ViewBag.JumlahKategori</strong></p>
-    }
+@* Kartu ringkasan *@
+<div class="row g-3 mb-4">
+    <div class="col-6 col-lg-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Total Pembeli</div>
+            <div class="fs-3 fw-semibold">@Format.Angka(Model.TotalPembeli)</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card h-100"><div class="card-body">
+            <div class="text-muted small">Total Pesanan</div>
+            <div class="fs-3 fw-semibold">@Format.Angka(Model.TotalPesanan)</div>
+            <div class="small text-muted">@Format.Angka(Model.TotalTiket) tiket · @Model.PesananBelumLunas belum lunas</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card h-100 border-success"><div class="card-body">
+            <div class="text-muted small">Total Pendapatan</div>
+            <div class="fs-5 fw-semibold text-success">@Format.Rupiah(Model.TotalPendapatan)</div>
+            <div class="small text-muted">uang yang sudah diterima</div>
+        </div></div>
+    </div>
+    <div class="col-6 col-lg-3">
+        <div class="card h-100 border-danger"><div class="card-body">
+            <div class="text-muted small">Belum Dibayar</div>
+            <div class="fs-5 fw-semibold text-danger">@Format.Rupiah(Model.BelumDibayar)</div>
+            <div class="small text-muted">dari pesanan BELUM LUNAS</div>
+        </div></div>
+    </div>
+</div>
+
+<div class="row g-4">
+    @* Sisa kuota per kategori *@
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-header fw-semibold">Sisa Kuota per Kategori</div>
+            <div class="card-body">
+                @if (Model.Kuota.Count == 0)
+                {
+                    <p class="text-muted mb-0">Belum ada kategori tiket.</p>
+                }
+                @foreach (var k in Model.Kuota)
+                {
+                    var persen = k.Kategori.Kuota == 0 ? 100 : (int)Math.Round(100.0 * k.Terjual / k.Kategori.Kuota);
+                    var warna = k.Sisa <= 0 ? "bg-danger" : persen >= 80 ? "bg-warning" : "bg-success";
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between small">
+                            <span class="fw-semibold">@k.Kategori.NamaKategori</span>
+                            <span>
+                                @if (k.Sisa <= 0)
+                                {
+                                    <span class="text-danger fw-semibold">Habis</span>
+                                }
+                                else
+                                {
+                                    @:Sisa @Format.Angka(k.Sisa) dari @Format.Angka(k.Kategori.Kuota)
+                                }
+                            </span>
+                        </div>
+                        <div class="progress" role="progressbar" aria-label="Tiket terjual @k.Kategori.NamaKategori" aria-valuenow="@persen" aria-valuemin="0" aria-valuemax="100" style="height: 8px;">
+                            <div class="progress-bar @warna" style="width: @persen%"></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @* Pesanan terbaru *@
+    <div class="col-lg-6">
+        <div class="card h-100">
+            <div class="card-header fw-semibold d-flex justify-content-between">
+                <span>Pesanan Terbaru</span>
+                <a asp-controller="Pesanan" asp-action="Index" class="small">Lihat semua</a>
+            </div>
+            <div class="card-body p-0">
+                @if (Model.PesananTerbaru.Count == 0)
+                {
+                    <p class="text-muted m-3">Belum ada pesanan.</p>
+                }
+                else
+                {
+                    <table class="table table-sm mb-0 align-middle">
+                        <tbody>
+                            @foreach (var p in Model.PesananTerbaru)
+                            {
+                                <tr>
+                                    <td class="ps-3 fw-semibold">@p.IdPesanan</td>
+                                    <td>@p.Pembeli?.Nama</td>
+                                    <td>@p.Kategori?.NamaKategori</td>
+                                    <td class="text-end text-nowrap">@Format.Rupiah(p.TotalHarga)</td>
+                                    <td class="pe-3 text-end">
+                                        @if (p.Status == Pesanan.StatusLunas)
+                                        {
+                                            <span class="badge bg-success">LUNAS</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-warning text-dark">BELUM</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Tombol ke setiap fitur *@
+<div class="d-flex flex-wrap gap-2 mt-4">
+    <a asp-controller="Pesanan" asp-action="Create" class="btn btn-primary">+ Pesan Tiket</a>
+    <a asp-controller="Pembeli" asp-action="Index" class="btn btn-outline-secondary">Data Pembeli</a>
+    <a asp-controller="Kategori" asp-action="Index" class="btn btn-outline-secondary">Kategori Tiket</a>
+    <a asp-controller="Pesanan" asp-action="Index" class="btn btn-outline-secondary">Pemesanan Tiket</a>
+    <a asp-controller="Laporan" asp-action="Index" class="btn btn-outline-secondary">Laporan Penjualan</a>
 </div>

@@ -11,7 +11,8 @@
     const info = document.getElementById("infoKategori");
 
     // Kalau bukan halaman pesanan, tidak melakukan apa-apa.
-    if (!kategori || !jumlah || !bayar || !total || !status || !info) {
+    // (Pembayaran dan Status boleh tidak ada, misalnya di form Pesan Tiket milik pembeli.)
+    if (!kategori || !jumlah || !total || !info) {
         return;
     }
 
@@ -24,7 +25,7 @@
         const harga = parseInt(pilihan?.dataset.harga ?? "0", 10) || 0;
         const sisa = parseInt(pilihan?.dataset.sisa ?? "0", 10) || 0;
         const qty = parseInt(jumlah.value, 10) || 0;
-        const uang = parseInt(bayar.value, 10) || 0;
+        const uang = bayar ? parseInt(bayar.value, 10) || 0 : 0;
 
         // ---------- Info harga dan sisa kuota ----------
         let pesanInfo;
@@ -45,16 +46,22 @@
         info.classList.toggle("text-danger", infoError);
 
         // ---------- Total harga dan status ----------
-        status.classList.remove("text-success", "text-danger", "fw-semibold");
-
         if (harga === 0 || qty < 1) {
             total.value = "Dihitung otomatis";
-            status.value = "Ditentukan otomatis";
+            if (status) {
+                status.value = "Ditentukan otomatis";
+                status.classList.remove("text-success", "text-danger", "fw-semibold");
+            }
             return;
         }
 
         const totalHarga = harga * qty;
         total.value = rupiah(totalHarga);
+
+        if (!status) {
+            return;
+        }
+        status.classList.remove("text-success", "text-danger", "fw-semibold");
 
         if (uang > totalHarga) {
             // Kelebihan bayar: tetap LUNAS, tapi tampilkan kembalian.
@@ -70,7 +77,7 @@
     }
 
     // Hitung ulang setiap kali kategori, jumlah, atau pembayaran berubah.
-    [kategori, jumlah, bayar].forEach((el) => {
+    [kategori, jumlah, bayar].filter(Boolean).forEach((el) => {
         el.addEventListener("input", hitung);
         el.addEventListener("change", hitung);
     });

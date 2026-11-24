@@ -7,7 +7,7 @@ using PemesananTiketKonser.Models;
 namespace PemesananTiketKonser.Controllers;
 
 // CRUD Data Pembeli + Cari. Semua halaman wajib login.
-[WajibLogin]
+[WajibLogin(DaftarPeran.Admin)]
 public class PembeliController : Controller
 {
     private readonly ApplicationDbContext _db;
@@ -137,6 +137,12 @@ public class PembeliController : Controller
         if (await _db.Pesanan.AnyAsync(p => p.PembeliId == id))
         {
             TempData["Gagal"] = $"Pembeli \"{pembeli.Nama}\" tidak bisa dihapus karena sudah punya pesanan.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        if (await _db.Admin.AnyAsync(a => a.PembeliId == id))
+        {
+            TempData["Gagal"] = $"Pembeli \"{pembeli.Nama}\" tidak bisa dihapus karena punya akun login.";
             return RedirectToAction(nameof(Index));
         }
 

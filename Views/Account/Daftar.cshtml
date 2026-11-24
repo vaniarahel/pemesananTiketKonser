@@ -1,0 +1,70 @@
+﻿@model PemesananTiketKonser.Models.DaftarViewModel
+@{
+    ViewData["Title"] = "Daftar Akun";
+}
+
+<div class="row justify-content-center mt-4">
+    <div class="col-12 col-md-8 col-lg-6">
+        <div class="card login-card shadow">
+            <div class="login-banner">
+                <img src="~/images/logo.svg" alt="Logo Tiket Konser" width="56" height="56" class="mb-3" />
+                <h1 class="h4 mb-1 text-white">Daftar Akun Pembeli</h1>
+                <p class="mb-0 text-white-50">Buat akun untuk memesan tiket konser</p>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Daftar" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2" role="alert"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Nama" class="form-label"></label>
+                        <input asp-for="Nama" class="form-control" autofocus autocomplete="name" />
+                        <span asp-validation-for="Nama" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" type="email" class="form-control" autocomplete="email" />
+                        <div class="form-text">Email dipakai untuk login.</div>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <label asp-for="NoHp" class="form-label"></label>
+                            <input asp-for="NoHp" type="tel" class="form-control" autocomplete="tel" />
+                            <span asp-validation-for="NoHp" class="text-danger small"></span>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label asp-for="NoIdentitas" class="form-label"></label>
+                            <input asp-for="NoIdentitas" class="form-control" />
+                            <span asp-validation-for="NoIdentitas" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" class="form-control" autocomplete="new-password" />
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <label asp-for="UlangiPassword" class="form-label"></label>
+                            <input asp-for="UlangiPassword" class="form-control" autocomplete="new-password" />
+                            <span asp-validation-for="UlangiPassword" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Daftar</button>
+                </form>
+
+                <p class="text-center mt-3 mb-0 small">
+                    Sudah punya akun? <a asp-action="Login">Login di sini</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
