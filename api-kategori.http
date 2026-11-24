@@ -1,0 +1,69 @@
+### Tes REST API Kategori Tiket
+### Cara pakai di Visual Studio: jalankan aplikasi (F5), lalu klik "Send request" di atas tiap request.
+### Ganti port di bawah sesuai yang muncul di browser waktu aplikasi jalan.
+@host = https://localhost:7021
+
+### 1. GET semua kategori -> 200
+GET {{host}}/api/kategori
+
+### 2. GET satu kategori -> 200
+GET {{host}}/api/kategori/1
+
+### 3. GET kategori yang tidak ada -> 404
+GET {{host}}/api/kategori/9999
+
+### 4. POST tambah kategori -> 201 Created (+ header Location)
+POST {{host}}/api/kategori
+Content-Type: application/json
+
+{
+  "namaKategori": "Tes API",
+  "harga": 400000,
+  "kuota": 100
+}
+
+### 5. POST nama kembar -> 409 Conflict (jalankan setelah nomor 4)
+POST {{host}}/api/kategori
+Content-Type: application/json
+
+{
+  "namaKategori": "Tes API",
+  "harga": 400000,
+  "kuota": 100
+}
+
+### 6. POST data tidak valid -> 400 Bad Request
+POST {{host}}/api/kategori
+Content-Type: application/json
+
+{
+  "namaKategori": "",
+  "harga": 0,
+  "kuota": -1
+}
+
+### 7. PUT ubah kategori -> 204 (ganti angka 4 dengan id kategori "Tes API" dari hasil nomor 4)
+PUT {{host}}/api/kategori/4
+Content-Type: application/json
+
+{
+  "namaKategori": "Tes API Update",
+  "harga": 450000,
+  "kuota": 90
+}
+
+### 8. PUT kategori yang tidak ada -> 404
+PUT {{host}}/api/kategori/9999
+Content-Type: application/json
+
+{
+  "namaKategori": "X",
+  "harga": 1,
+  "kuota": 1
+}
+
+### 9. DELETE kategori yang sudah dipakai pesanan -> 409 Conflict
+DELETE {{host}}/api/kategori/1
+
+### 10. DELETE kategori "Tes API" -> 204 (jalankan lagi -> 404)
+DELETE {{host}}/api/kategori/4
